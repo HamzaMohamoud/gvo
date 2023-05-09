@@ -1,1 +1,5 @@
-
+body {
+    background-image: url('https://images5.alphacoders.com/523/523521.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

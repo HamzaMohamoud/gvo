@@ -1,6 +1,5 @@
 // *----- constants -----*/
-const WORD_CHOICE = {
-  Countries: [
+const WORD_CHOICE =  [
       'France',
       'Brazil',
       'Japan',
@@ -13,24 +12,7 @@ const WORD_CHOICE = {
       'Spain',
       'Somalia',
       'Ghana',
-  ],
-  Cities: [
-      'Tokyo',
-      'Paris',
-      'Sydney',
-      'New York City',
-      'Dubai',
-      'Rio de Janeiro'
-  ],
-  States: [
-      'California',
-      'Texas',
-      'Florida',
-      'New York',
-      'Alaska',
-      'Hawaii',
-  ],
-};
+  ]
 const maxWrong = 6;
 const IMGS = [
   "img/spaceman.png/spaceman-0.jpg",
@@ -53,39 +35,39 @@ let categories = false;
 const message = document.getElementById('message');
 const guess = document.getElementById('spotLight');
 const letterButtons = document.querySelectorAll('.button-grid > button');
-const playButton =  document.getElementById('playButton');
 const spaceman = document.querySelector('img');
-const catButton = document.querySelector('.catBtns');
 const guessedLettersContainer = document.querySelector('.guessed-letters-container');
 const guessedLetters = document.getElementById('guessed-letters');
 const Gstatus = document.getElementById('gameStatus');
 
 /*----- event listeners -----*/
-document.querySelector('section').addEventListener('click', handleClick)
-playButton.addEventListener('click', init)
+document.querySelector('.button-grid').addEventListener('click', handleClick)
 
-catButton.addEventListener('click', handleCatagorie)
+
+// catButton.addEventListener('click', handleCatagorie)
 
 /*----- functions -----*/
 
-function handleCatagorie(evt) {
-  catagories = evt.target.textContent
-console.log(WORD_CHOICE[catagories]);
-console.log(evt.target);
-message.style.visibility = 'hidden';
-  answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
-  wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
-  render();
-}
+// function handleCatagorie(evt) {
+//   catagories = evt.target.textContent
+// console.log(WORD_CHOICE[catagories]);
+// console.log(evt.target);
+// message.style.visibility = 'hidden';
+//   answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
+//   wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
+//   render();
+// }
 
+init()
 
 function handleClick (evt) {
   const letter = evt.target.textContent
-  const target = evt.target;
-  allGuesses.push(target);
+  console.log (letter) 
+  // const target = evt.target;
+  // allGuesses.push(target);
   if (gameStatus || evt.target.tagName !== "BUTTON" || wrongGuesses.includes(letter) || wordStatus.includes(letter)) return;
   if (answer.join('').toLowerCase().includes(letter)) {
-      console.log('right answer')
+            console.log('right answer')
       answer.forEach((elm, idx) => {
      if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
     })
@@ -93,6 +75,7 @@ function handleClick (evt) {
       gameStatus = 'W';
     }
   } else {
+    console.log("wronganswer")
       wrongGuesses.push(letter);
       if (wrongGuesses.length === 6) {
           gameStatus = 'L'
@@ -105,35 +88,38 @@ function init() {
 allGuesses= [];
 wrongGuesses = [];
 gameStatus = null;
-wordStatus = [];
-catagories = null;
+let idx = Math.floor(Math.random() * WORD_CHOICE.length)
+console.log(idx)
+answer = WORD_CHOICE[idx].split("")
+console.log(answer)
+wordStatus = answer.map(letter => " _ ")
 render();
 }
 
 init()
 
 function render() {
-  renderButtons();
-  document.querySelector('section').style.visibility = catagories ? 'visible': 'hidden';
-  document.querySelector('.catBtns').style.visibility = catagories ? 'hidden' : 'visible';
+  // renderButtons();
+  // document.querySelector('section').style.visibility = catagories ? 'visible': 'hidden';
+  // document.querySelector('.catBtns').style.visibility = catagories ? 'hidden' : 'visible';
   guess.textContent = wordStatus ? wordStatus.join("") : ''
-  spaceman.src = `img/spaceman-${wrongGuesses.length}.jpg`;
+  spaceman.src = `img/spaceman-${wrongGuesses.length}.png`;
   renderMessage();
-  playButton.style.visibility = gameStatus ? 'visible' : 'hidden';
+  // playButton.style.visibility = gameStatus ? 'visible' : 'hidden';
 }
 
-function renderButtons() {
-  console.log("hello");
-letterButtons.forEach( (button) => {
-  console.log(button);
-  if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
-      console.log('money')
-      button.style.visibility = 'hidden';
-  } else {
-      button.style.visibility = 'visible';
-  }
-})
-}
+// function renderButtons() {
+//   console.log("hello");
+// letterButtons.forEach( (button) => {
+//   console.log(button);
+//   if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
+//       console.log('money')
+//       button.style.visibility = 'hidden';
+//   } else {
+//       button.style.visibility = 'visible';
+//   }
+// })
+// }
 
 function renderMessage() {
   if (gameStatus === 'W') {

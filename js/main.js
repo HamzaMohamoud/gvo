@@ -12,6 +12,7 @@ const WORD_CHOICE =  [
       'Spain',
       'Somalia',
       'Ghana',
+      'Uganda'
   ]
 const maxWrong = 6;
 const IMGS = [
@@ -40,6 +41,7 @@ const guessedLettersContainer = document.querySelector('.guessed-letters-contain
 const guessedLetters = document.getElementById('guessed-letters');
 const Gstatus = document.getElementById('gameStatus');
 
+
 /*----- event listeners -----*/
 document.querySelector('.button-grid').addEventListener('click', handleClick)
 
@@ -48,15 +50,15 @@ document.querySelector('.button-grid').addEventListener('click', handleClick)
 
 /*----- functions -----*/
 
-// function handleCatagorie(evt) {
-//   catagories = evt.target.textContent
-// console.log(WORD_CHOICE[catagories]);
-// console.log(evt.target);
-// message.style.visibility = 'hidden';
-//   answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
-//   wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
-//   render();
-// }
+function handleCatagorie(evt) {
+catagories = evt.target.textContent
+console.log(WORD_CHOICE[catagories]);
+console.log(evt.target);
+message.style.visibility = 'hidden';
+  answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
+  wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
+  render();
+}
 
 init()
 
@@ -108,24 +110,24 @@ function render() {
   // playButton.style.visibility = gameStatus ? 'visible' : 'hidden';
 }
 
-// function renderButtons() {
-//   console.log("hello");
-// letterButtons.forEach( (button) => {
-//   console.log(button);
-//   if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
-//       console.log('money')
-//       button.style.visibility = 'hidden';
-//   } else {
-//       button.style.visibility = 'visible';
-//   }
-// })
-// }
+function renderButtons() {
+  console.log("hello");
+letterButtons.forEach( (button) => {
+  console.log(button);
+  if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
+      console.log('money')
+      button.style.visibility = 'hidden';
+  } else {
+      button.style.visibility = 'visible';
+  }
+})
+}
 
 function renderMessage() {
   if (gameStatus === 'W') {
-      Gstatus.textContent = 'You Win!!!'
+      Gstatus.textContent = 'WIN'
   } else if (gameStatus === 'L'){
-      Gstatus.textContent = 'You Lose!'
+      Gstatus.textContent = 'LOSE'
   } else {
       Gstatus.textContent = ''
   }

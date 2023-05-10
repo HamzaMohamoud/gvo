@@ -1,63 +1,147 @@
-/*----- constants -----*/
+// *----- constants -----*/
+const WORD_CHOICE = {
+  Countries: [
+      'France',
+      'Brazil',
+      'Japan',
+      'Australia',
+      'Canada',
+      'Germany',
+      'India',
+      'Italy',
+      'Mexico',
+      'Spain',
+      'Somalia',
+      'Ghana',
+  ],
+  Cities: [
+      'Tokyo',
+      'Paris',
+      'Sydney',
+      'New York City',
+      'Dubai',
+      'Rio de Janeiro'
+  ],
+  States: [
+      'California',
+      'Texas',
+      'Florida',
+      'New York',
+      'Alaska',
+      'Hawaii',
+  ],
+};
 const maxWrong = 6;
-
 const IMGS = [
-  "img/spaceman-0.png",
-  "img/spaceman-1.png",
-  "img/spaceman-2.png",
-  "img/spaceman-3.png",
-  "img/spaceman-4.png",
-  "img/spaceman-5.png",
-  "img/spaceman-6.png"
+  "img/spaceman.png/spaceman-0.jpg",
+  "img/spaceman.png/spaceman-1.jpg",
+  "img/spaceman.png/spaceman-2.jpg",
+  "img/spaceman.png/spaceman-3.jpg",
+  "img/spaceman.png/spaceman-4.jpg",
+  "img/spaceman.png/spaceman-5.jpg",
+  "img/spaceman.png/spaceman-6.jpg",
 ];
+/*----- state variables -----*/
+let answer = " ";
+let mistakes = 0;
+let wrongGuesses = [];
+let allGuesses = [];
+let wordStatus = null;
+let gameStatus;
+let categories = false;
+/*----- cached elements  -----*/
+const message = document.getElementById('message');
+const guess = document.getElementById('spotLight');
+const letterButtons = document.querySelectorAll('.button-grid > button');
+const playButton =  document.getElementById('playButton');
+const spaceman = document.querySelector('img');
+const catButton = document.querySelector('.catBtns');
+const guessedLettersContainer = document.querySelector('.guessed-letters-container');
+const guessedLetters = document.getElementById('guessed-letters');
+const Gstatus = document.getElementById('gameStatus');
 
-  /*----- state variables -----*/
-  let answer = " ";
-  let mistakes = 0; 
-  let wrongGuesses = [];
-  let allGuesses = [];
-  let wordStatus = null;
-  let gameStatus;
+/*----- event listeners -----*/
+document.querySelector('section').addEventListener('click', handleClick)
+playButton.addEventListener('click', init)
 
-  /*----- cached elements  -----*/
+catButton.addEventListener('click', handleCatagorie)
 
-  
+/*----- functions -----*/
 
-
-  /*----- event listeners -----*/
-
-
-  /*----- functions -----*/
-
-  function init() {
-    allGuesses = [];
-    wrongGuesses = [];
-    gameStatus = null;
-    wordStatus = [];
-    render();
-  };
+function handleCatagorie(evt) {
+  catagories = evt.target.textContent
+console.log(WORD_CHOICE[catagories]);
+console.log(evt.target);
+message.style.visibility = 'hidden';
+  answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
+  wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
+  render();
+}
 
 
-  init() 
-
-  function render() {
-    const gameStatusElement = document.getElementById("gameStatus");
-    const astronautImageElement = document.getElementById("astronautImage");
-    const guessedLettersElement = document.getElementById("guessed-letters");
-  
-    gameStatusElement.textContent = gameStatus || "";
-    astronautImageElement.src = IMGS[mistakes];
-    guessedLettersElement.textContent = wrongGuesses.join(" ");
-  
-    // Additional rendering logic based on wordStatus (e.g., displaying the correctly guessed letters)
-  
-    // Check if the game is over and update the message accordingly
-    if (gameStatus === "win") {
-      document.getElementById("message").textContent = "Congratulations! You won!";
-    } else if (gameStatus === "lose") {
-      document.getElementById("message").textContent = "Game over! You lost!";
-    } else {
-      document.getElementById("message").textContent = "";
+function handleClick (evt) {
+  const letter = evt.target.textContent
+  const target = evt.target;
+  allGuesses.push(target);
+  if (gameStatus || evt.target.tagName !== "BUTTON" || wrongGuesses.includes(letter) || wordStatus.includes(letter)) return;
+  if (answer.join('').toLowerCase().includes(letter)) {
+      console.log('right answer')
+      answer.forEach((elm, idx) => {
+     if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
+    })
+    if (answer.join('') === wordStatus.join('')) {
+      gameStatus = 'W';
     }
+  } else {
+      wrongGuesses.push(letter);
+      if (wrongGuesses.length === 6) {
+          gameStatus = 'L'
+      }
   }
-  
+  render();
+}
+
+function init() {
+allGuesses= [];
+wrongGuesses = [];
+gameStatus = null;
+wordStatus = [];
+catagories = null;
+render();
+}
+
+init()
+
+function render() {
+  renderButtons();
+  document.querySelector('section').style.visibility = catagories ? 'visible': 'hidden';
+  document.querySelector('.catBtns').style.visibility = catagories ? 'hidden' : 'visible';
+  guess.textContent = wordStatus ? wordStatus.join("") : ''
+  spaceman.src = `img/spaceman-${wrongGuesses.length}.jpg`;
+  renderMessage();
+  playButton.style.visibility = gameStatus ? 'visible' : 'hidden';
+}
+
+function renderButtons() {
+  console.log("hello");
+letterButtons.forEach( (button) => {
+  console.log(button);
+  if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
+      console.log('money')
+      button.style.visibility = 'hidden';
+  } else {
+      button.style.visibility = 'visible';
+  }
+})
+}
+
+function renderMessage() {
+  if (gameStatus === 'W') {
+      Gstatus.textContent = 'You Win!!!'
+  } else if (gameStatus === 'L'){
+      Gstatus.textContent = 'You Lose!'
+  } else {
+      Gstatus.textContent = ''
+  }
+}
+

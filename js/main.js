@@ -40,11 +40,11 @@ const spaceman = document.querySelector('img');
 const guessedLettersContainer = document.querySelector('.guessed-letters-container');
 const guessedLetters = document.getElementById('guessed-letters');
 const Gstatus = document.getElementById('gameStatus');
-
+const resetBtn = document.querySelector('.reset');
 
 /*----- event listeners -----*/
 document.querySelector('.button-grid').addEventListener('click', handleClick)
-
+resetBtn.addEventListener('click', init);
 
 // catButton.addEventListener('click', handleCatagorie)
 
@@ -107,7 +107,7 @@ function render() {
   guess.textContent = wordStatus ? wordStatus.join("") : ''
   spaceman.src = `img/spaceman-${wrongGuesses.length}.png`;
   renderMessage();
-  // playButton.style.visibility = gameStatus ? 'visible' : 'hidden';
+  resetBtn.style.visibility = gameStatus ? 'visible' : 'hidden';
 }
 
 function renderButtons() {

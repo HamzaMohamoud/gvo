@@ -32,6 +32,7 @@ let allGuesses = [];
 let wordStatus = null;
 let gameStatus;
 let categories = false;
+
 /*----- cached elements  -----*/
 const message = document.getElementById('message');
 const guess = document.getElementById('spotLight');
@@ -52,8 +53,6 @@ resetBtn.addEventListener('click', init);
 
 function handleCatagorie(evt) {
 catagories = evt.target.textContent
-console.log(WORD_CHOICE[catagories]);
-console.log(evt.target);
 message.style.visibility = 'hidden';
   answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
   wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
@@ -63,13 +62,11 @@ message.style.visibility = 'hidden';
 init()
 
 function handleClick (evt) {
-  const letter = evt.target.textContent
-  console.log (letter) 
+  const letter = evt.target.textContent 
   // const target = evt.target;
   // allGuesses.push(target);
   if (gameStatus || evt.target.tagName !== "BUTTON" || wrongGuesses.includes(letter) || wordStatus.includes(letter)) return;
   if (answer.join('').toLowerCase().includes(letter)) {
-            console.log('right answer')
       answer.forEach((elm, idx) => {
      if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
     })
@@ -77,7 +74,6 @@ function handleClick (evt) {
       gameStatus = 'W';
     }
   } else {
-    console.log("wronganswer")
       wrongGuesses.push(letter);
       if (wrongGuesses.length === 6) {
           gameStatus = 'L'
@@ -91,9 +87,7 @@ allGuesses= [];
 wrongGuesses = [];
 gameStatus = null;
 let idx = Math.floor(Math.random() * WORD_CHOICE.length)
-console.log(idx)
 answer = WORD_CHOICE[idx].split("")
-console.log(answer)
 wordStatus = answer.map(letter => " _ ")
 render();
 }
@@ -111,11 +105,8 @@ function render() {
 }
 
 function renderButtons() {
-  console.log("hello");
 letterButtons.forEach( (button) => {
-  console.log(button);
   if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
-      console.log('money')
       button.style.visibility = 'hidden';
   } else {
       button.style.visibility = 'visible';

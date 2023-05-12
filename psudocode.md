@@ -1,4 +1,4 @@
-1. Create a random word list or use a predefined word list.
+1. Create a random word list 
 2. Select a word from the list as the secret word.
 3. Display the number of characters in the secret word as underscores.
 4. Set the maximum number of attempts allowed.

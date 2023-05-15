@@ -44,7 +44,7 @@ const Gstatus = document.getElementById('gameStatus');
 const resetBtn = document.querySelector('.reset');
 
 /*----- event listeners -----*/
-document.querySelector('.button-grid').addEventListener('click', handleClick)
+document.querySelector('.button-grid').addEventListener('click', handleClick);
 resetBtn.addEventListener('click', init);
 
 // catButton.addEventListener('click', handleCatagorie)
@@ -52,31 +52,29 @@ resetBtn.addEventListener('click', init);
 /*----- functions -----*/
 
 function handleCatagorie(evt) {
-  catagories = evt.target.textContent
+  catagories = evt.target.textContent;
   message.style.visibility = 'hidden';
   answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
-  wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
+  wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ");
   render();
 }
 
-init()
+init();
 
 function handleClick(evt) {
-  const letter = evt.target.textContent
-  // const target = evt.target;
-  // allGuesses.push(target);
+  const letter = evt.target.textContent;
   if (gameStatus || evt.target.tagName !== "BUTTON" || wrongGuesses.includes(letter) || wordStatus.includes(letter)) return;
   if (answer.join('').toLowerCase().includes(letter)) {
     answer.forEach((elm, idx) => {
       if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
-    })
+    });
     if (answer.join('') === wordStatus.join('')) {
       gameStatus = 'W';
     }
   } else {
     wrongGuesses.push(letter);
     if (wrongGuesses.length === 6) {
-      gameStatus = 'L'
+      gameStatus = 'L';
     }
   }
   render();
@@ -86,16 +84,16 @@ function init() {
   allGuesses = [];
   wrongGuesses = [];
   gameStatus = null;
-  let idx = Math.floor(Math.random() * WORD_CHOICE.length)
-  answer = WORD_CHOICE[idx].split("")
-  wordStatus = answer.map(letter => " _ ")
+  let idx = Math.floor(Math.random() * WORD_CHOICE.length);
+  answer = WORD_CHOICE[idx].split("");
+  wordStatus = answer.map(letter => " _ ");
   render();
 }
 
 init()
 
 function render() {
-  guess.textContent = wordStatus ? wordStatus.join("") : ''
+  guess.textContent = wordStatus ? wordStatus.join("") : '';
   spaceman.src = `img/spaceman-${wrongGuesses.length}.png`;
   renderMessage();
   resetBtn.style.visibility = gameStatus ? 'visible' : 'hidden';
@@ -113,11 +111,11 @@ function renderButtons() {
 
 function renderMessage() {
   if (gameStatus === 'W') {
-    Gstatus.textContent = 'WIN'
+    Gstatus.textContent = 'WIN';
   } else if (gameStatus === 'L') {
-    Gstatus.textContent = 'LOSE'
+    Gstatus.textContent = 'LOSE';
   } else {
-    Gstatus.textContent = ''
+    Gstatus.textContent = '';
   }
 }
 

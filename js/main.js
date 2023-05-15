@@ -95,9 +95,6 @@ render();
 init()
 
 function render() {
-  // renderButtons();
-  // document.querySelector('section').style.visibility = catagories ? 'visible': 'hidden';
-  // document.querySelector('.catBtns').style.visibility = catagories ? 'hidden' : 'visible';
   guess.textContent = wordStatus ? wordStatus.join("") : ''
   spaceman.src = `img/spaceman-${wrongGuesses.length}.png`;
   renderMessage();

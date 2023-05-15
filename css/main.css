@@ -33,3 +33,22 @@ section{
 }
 
 
+.catBtns {
+  display: flex;
+  justify-content: center;
+}
+
+.catBtns button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: red;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.catBtns button:hover {
+  background-color: #333;
+}

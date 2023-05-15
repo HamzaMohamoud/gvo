@@ -1,19 +1,19 @@
 // *----- constants -----*/
-const WORD_CHOICE =  [
-      'France',
-      'Brazil',
-      'Japan',
-      'Australia',
-      'Canada',
-      'Germany',
-      'India',
-      'Italy',
-      'Mexico',
-      'Spain',
-      'Somalia',
-      'Ghana',
-      'Uganda'
-  ]
+const WORD_CHOICE = [
+  'France',
+  'Brazil',
+  'Japan',
+  'Australia',
+  'Canada',
+  'Germany',
+  'India',
+  'Italy',
+  'Mexico',
+  'Spain',
+  'Somalia',
+  'Ghana',
+  'Uganda'
+]
 const maxWrong = 6;
 const IMGS = [
   "img/spaceman.png/spaceman-0.jpg",
@@ -52,8 +52,8 @@ resetBtn.addEventListener('click', init);
 /*----- functions -----*/
 
 function handleCatagorie(evt) {
-catagories = evt.target.textContent
-message.style.visibility = 'hidden';
+  catagories = evt.target.textContent
+  message.style.visibility = 'hidden';
   answer = WORD_CHOICE[catagories][Math.floor(Math.random() * WORD_CHOICE[catagories].length)].split('')
   wordStatus = answer.map(ltr => ltr === " " ? " " : " _ ")
   render();
@@ -61,35 +61,35 @@ message.style.visibility = 'hidden';
 
 init()
 
-function handleClick (evt) {
-  const letter = evt.target.textContent 
+function handleClick(evt) {
+  const letter = evt.target.textContent
   // const target = evt.target;
   // allGuesses.push(target);
   if (gameStatus || evt.target.tagName !== "BUTTON" || wrongGuesses.includes(letter) || wordStatus.includes(letter)) return;
   if (answer.join('').toLowerCase().includes(letter)) {
-      answer.forEach((elm, idx) => {
-     if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
+    answer.forEach((elm, idx) => {
+      if (elm.toLowerCase() === letter) wordStatus[idx] = elm;
     })
     if (answer.join('') === wordStatus.join('')) {
       gameStatus = 'W';
     }
   } else {
-      wrongGuesses.push(letter);
-      if (wrongGuesses.length === 6) {
-          gameStatus = 'L'
-      }
+    wrongGuesses.push(letter);
+    if (wrongGuesses.length === 6) {
+      gameStatus = 'L'
+    }
   }
   render();
 }
 
 function init() {
-allGuesses= [];
-wrongGuesses = [];
-gameStatus = null;
-let idx = Math.floor(Math.random() * WORD_CHOICE.length)
-answer = WORD_CHOICE[idx].split("")
-wordStatus = answer.map(letter => " _ ")
-render();
+  allGuesses = [];
+  wrongGuesses = [];
+  gameStatus = null;
+  let idx = Math.floor(Math.random() * WORD_CHOICE.length)
+  answer = WORD_CHOICE[idx].split("")
+  wordStatus = answer.map(letter => " _ ")
+  render();
 }
 
 init()
@@ -102,22 +102,22 @@ function render() {
 }
 
 function renderButtons() {
-letterButtons.forEach( (button) => {
-  if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())){
+  letterButtons.forEach((button) => {
+    if (!catagories || wordStatus.includes(button.textContent.toLowerCase()) || wrongGuesses.includes(button.textContent.toLowerCase())) {
       button.style.visibility = 'hidden';
-  } else {
+    } else {
       button.style.visibility = 'visible';
-  }
-})
+    }
+  })
 }
 
 function renderMessage() {
   if (gameStatus === 'W') {
-      Gstatus.textContent = 'WIN'
-  } else if (gameStatus === 'L'){
-      Gstatus.textContent = 'LOSE'
+    Gstatus.textContent = 'WIN'
+  } else if (gameStatus === 'L') {
+    Gstatus.textContent = 'LOSE'
   } else {
-      Gstatus.textContent = ''
+    Gstatus.textContent = ''
   }
 }
 
